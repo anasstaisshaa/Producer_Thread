@@ -14,9 +14,13 @@ public class ProducerThread implements Runnable{
     public void run() {
         synchronized (list){
             while(true){
-                list.add(MyRandom.getRandom());
+                int random = MyRandom.getRandom();
+                System.out.println("produces adds value: " + random);
+                list.add(random);
                 try {
-                    list.wait(MyRandom.getRandom());
+                    int randomWaitValue = MyRandom.getRandom();
+                    System.out.println("producer waits: " + randomWaitValue);
+                    list.wait(randomWaitValue);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
