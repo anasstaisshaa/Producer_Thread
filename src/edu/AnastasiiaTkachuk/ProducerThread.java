@@ -14,10 +14,17 @@ public class ProducerThread implements Runnable{
     public void run() {
         synchronized (list){
             while(true){
-                int random = MyRandom.getRandom();
-                System.out.println("produces adds value: " + random);
-                list.add(random);
-                try {
+                if(list.size() < 10){
+                    int random = MyRandom.getRandom();
+                    list.add(random);
+                    list.notifyAll();
+                    System.out.println("produces adds value: " + random + ". Size" + list.size());
+
+                } else {
+                    System.out.println("producer does nothing");
+                }
+                list.notifyAll();
+                 try {
                     int randomWaitValue = MyRandom.getRandom();
                     System.out.println("producer waits: " + randomWaitValue);
                     list.wait(randomWaitValue);
